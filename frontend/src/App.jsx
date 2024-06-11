@@ -10,10 +10,11 @@ function App() {
   const [input, setInput] = useState('');
 
   useEffect(() => {
-    // Fetch initial messages from the server
+    
     const fetchMessages = async () => {
       try {
         const response = await Axios.get('http://localhost:3000/api/messages');
+        console.log(response.data)
         setMessages(response.data);
       } catch (error) {
         console.error('Error fetching messages:', error);
@@ -22,28 +23,34 @@ function App() {
 
     fetchMessages();
 
-    // Listen for new messages from the server
     socket.on('message', (message) => {
       setMessages((prevMessages) => [...prevMessages, message]);
     });
 
-    // Clean up the effect
     return () => {
       socket.off('message');
     };
   }, []);
 
+  
   const sendMessage = () => {
     socket.emit('message', input);
+    console.log(`Sent message : ${input}`)
     setInput('');
   };
+
+
+  useEffect(() => {
+    console.log(`Messsage array got updated (frontend) : \n${messages}`)
+  }, [messages])
+
 
   return (
     <div>
       <h1>Chat App</h1>
       <div>
         {messages.map((msg, index) => (
-          <div key={index}>{msg}</div>
+          <div key={index}>{msg.id} : {msg.message}</div>
         ))}
       </div>
       <input

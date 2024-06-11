@@ -1,48 +1,46 @@
-// server.js
-const express = require('express');
-const http = require('http');
-const socketIo = require('socket.io');
-const cors = require('cors');
+const express = require('express')
+const http = require('http')
+const socketIo = require('socket.io')
+const cors = require('cors')
 
-const app = express();
+const app = express()
+
 app.use(cors({
   origin: 'http://localhost:5173',
   methods: ['GET', 'POST'],
   credentials: true
-}));
+}))
 
-// Middleware to parse JSON bodies
-app.use(express.json());
+app.use(express.json())
 
-// Example in-memory message store
-const messages = [];
+const messages = []
 
 app.get('/api/messages', (req, res) => {
-  res.json(messages);
-});
+  res.json(messages)
+})
 
-const server = http.createServer(app);
+const server = http.createServer(app)
 const io = socketIo(server, {
   cors: {
     origin: 'http://localhost:5173',
     methods: ['GET', 'POST'],
     credentials: true
   }
-});
+})
 
 io.on('connection', (socket) => {
-  console.log(`${socket.id} user connected`);
+  console.log(`${socket.id} user connected`)
 
   socket.on('message', (message) => {
-    messages.push(message); // Store message
-    io.emit('message', message);
-  });
+    messages.push({id: socket.id, message: message})
+    io.emit('message', {id: socket.id, message: message})
+  })
 
   socket.on('disconnect', () => {
-    console.log('user disconnected');
-  });
-});
+    console.log(`${socket.id} user DISconnected`)
+  })
+})
 
 server.listen(3000, () => {
-  console.log('listening on *:3000');
-});
+  console.log('listening on *:3000')
+})
