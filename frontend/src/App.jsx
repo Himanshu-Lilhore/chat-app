@@ -152,8 +152,8 @@ function App() {
 
 	return (
 		<div className='flex flex-col gap-4 p-4 w-fit'>
-			<div className='h-screen w-screen absolute top-0 left-0 bg-repeat' style={{backgroundImage: "url('./clouds.svg')"}}></div>
-			<div className='text-6xl font-extrabold mb-4 w-fit bg-sky-900 z-10'>Chat App</div>
+			<div className='h-screen w-screen absolute top-0 left-0 bg-repeat' style={{backgroundImage: "url('./wavey.svg')"}}></div>
+			<div className='text-6xl font-extrabold mb-4 w-fit z-10'>Chat App</div>
 			<div className='flex flex-col gap-3 border rounded-lg p-2 backdrop-blur-sm'>
 				{/* chatroom info */}
 				<div className='flex flex-row gap-2 pt-1'>
@@ -163,7 +163,7 @@ function App() {
 						{
 							uniqueUsers.map(val => {
 								if (user !== val)
-									return <div className='border px-2 h-fit rounded-full' key={val}>{val}</div>
+									return <div className='border px-2 h-fit rounded-full bg-black/50' key={val}>{val}</div>
 							})
 						}
 					</div>
@@ -186,7 +186,7 @@ function App() {
 					))}
 				</div>
 				{/* Inputs  */}
-				<div className='flex flex-row gap-2'>
+				<div className='flex flex-row gap-2 justify-end'>
 					<input
 						type="text"
 						value={input}
