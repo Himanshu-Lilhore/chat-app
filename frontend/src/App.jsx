@@ -153,8 +153,8 @@ function App() {
 	return (
 		<div className='flex flex-col gap-4 p-4 w-fit'>
 			<div className='h-screen w-screen absolute top-0 left-0 bg-repeat' style={{backgroundImage: "url('./clouds.svg')"}}></div>
-			<div className='text-6xl font-extrabold mb-4 w-fit'>Chat App</div>
-			<div className='flex flex-col gap-3 border rounded-lg p-2 bg-gray-900/55 backdrop-blur-sm'>
+			<div className='text-6xl font-extrabold mb-4 w-fit bg-sky-900 z-10'>Chat App</div>
+			<div className='flex flex-col gap-3 border rounded-lg p-2 backdrop-blur-sm'>
 				{/* chatroom info */}
 				<div className='flex flex-row gap-2 pt-1'>
 					<input className='border rounded-md px-2 bg-red-500/10 text-white max-w-40 h-fit' onChange={(e) => settingUsername(e.target.value)} value={user} />
