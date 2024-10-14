@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useEffect, useState, useRef } from 'react';
 import socket from './socket';
 import Axios from 'axios';
@@ -33,7 +32,7 @@ function App() {
 
 		const fetchMessages = async () => {
 			try {
-				const response = await Axios.get('http://localhost:3000/api/messages');
+				const response = await Axios.get(`${import.meta.env.VITE_BACKEND_URL}api/messages`);
 				console.log(response.data)
 				setMessages(response.data);
 			} catch (error) {
@@ -153,8 +152,9 @@ function App() {
 
 	return (
 		<div className='flex flex-col gap-4 p-4 w-fit'>
-			<div className='text-4xl font-bold mb-4'>Chat App</div>
-			<div className='flex flex-col gap-3 border rounded-sm p-2'>
+			<div className='h-screen w-screen absolute top-0 left-0 bg-repeat' style={{backgroundImage: "url('./clouds.svg')"}}></div>
+			<div className='text-6xl font-extrabold mb-4 w-fit'>Chat App</div>
+			<div className='flex flex-col gap-3 border rounded-lg p-2 bg-gray-900/55 backdrop-blur-sm'>
 				{/* chatroom info */}
 				<div className='flex flex-row gap-2 pt-1'>
 					<input className='border rounded-md px-2 bg-red-500/10 text-white max-w-40 h-fit' onChange={(e) => settingUsername(e.target.value)} value={user} />
@@ -195,7 +195,7 @@ function App() {
 						className='rounded-md px-1 text-black'
 					/>
 					<button onClick={sendMessage} className='px-2 border rounded-md hover:bg-zinc-600'>Send</button>
-					<button onClick={(e) => toggleConnect(e)} className='px-2 border rounded-md hover:bg-zinc-600'>{isConnected ? 'X' : '>'}</button>
+					{/* <button onClick={(e) => toggleConnect(e)} className='px-2 border rounded-md hover:bg-zinc-600'>{isConnected ? 'X' : '>'}</button> */}
 				</div>
 			</div>
 		</div>

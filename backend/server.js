@@ -6,27 +6,36 @@ const socketIo = require('socket.io')
 const cors = require('cors')
 const port = process.env.PORT || 3000
 const { v4: uuidv4 } = require('uuid');
+const Message = require('./models/messageModel')
 users = {}
 
 app.use(cors({
-	origin: 'http://localhost:5173',
+	origin: process.env.FRONTEND_URL,
 	methods: ['GET', 'POST'],
 	credentials: true
 }))
 
 app.use(express.json())
 
-const messages = []
+let messages = []
 
-app.get('/api/messages', (req, res) => {
+app.get('/api/messages', async (req, res) => {
 	res.json(messages)
+	// try{
+	// 	msgs = await Message.find()
+	// 	console.log("Fetched successfully !")
+	// 	res.status(200).json(msgs)
+	// } catch (err) {
+	// 	console.log("Error fetching messages")
+	// 	res.status(400).json({ message: err.message })
+	// }
 })
 
 const server = http.createServer(app)
 const io = socketIo(server, {
 	connectionStateRecovery: {},
 	cors: {
-		origin: 'http://localhost:5173',
+		origin: process.env.FRONTEND_URL,
 		methods: ['GET', 'POST'],
 		credentials: true
 	}
@@ -80,6 +89,6 @@ io.on('connection', (socket) => {
 	})
 })
 
-server.listen(3000, () => {
+server.listen(port, () => {
 	console.log(`Backend live : http://localhost:${port}/`)
 })
